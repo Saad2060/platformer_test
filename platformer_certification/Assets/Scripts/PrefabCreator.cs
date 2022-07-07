@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PrefabCreator : MonoBehaviour
 {
-    [SerializeField] GameObject prefab;
+    [SerializeField] GameObject[] prefab;
     [SerializeField] Transform referncepoint;
     [SerializeField] GameObject lastPlatformCreated;
+    [SerializeField] float spaceBetweenPlatforms= 2;
     float lastPlatformWidth;
 
     // Start is called before the first frame update
@@ -20,8 +21,9 @@ public class PrefabCreator : MonoBehaviour
     {
         if (lastPlatformCreated.transform.position.x < referncepoint.position.x)
         {
-            Vector3 targetCreationPoint = new Vector3(referncepoint.position.x + lastPlatformWidth, 0, 0);
-            lastPlatformCreated = Instantiate(prefab, targetCreationPoint, Quaternion.identity);
+            Vector3 targetCreationPoint = new Vector3(referncepoint.position.x + lastPlatformWidth + spaceBetweenPlatforms, 0, 0);
+            int randomPlatform = Random.Range(0, 2);
+            lastPlatformCreated = Instantiate(prefab[randomPlatform], targetCreationPoint, Quaternion.identity);
             BoxCollider2D collider = lastPlatformCreated.GetComponent<BoxCollider2D>();
             lastPlatformWidth = collider.bounds.size.x;
         }
