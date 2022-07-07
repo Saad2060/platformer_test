@@ -22,7 +22,7 @@ public class PrefabCreator : MonoBehaviour
         if (lastPlatformCreated.transform.position.x < referncepoint.position.x)
         {
             Vector3 targetCreationPoint = new Vector3(referncepoint.position.x + lastPlatformWidth + spaceBetweenPlatforms, 0, 0);
-            int randomPlatform = Random.Range(0, 6);
+            int randomPlatform = Random.Range(0, prefab.Length);
             lastPlatformCreated = Instantiate(prefab[randomPlatform], targetCreationPoint, Quaternion.identity);
             BoxCollider2D collider = lastPlatformCreated.GetComponent<BoxCollider2D>();
             lastPlatformWidth = collider.bounds.size.x;
