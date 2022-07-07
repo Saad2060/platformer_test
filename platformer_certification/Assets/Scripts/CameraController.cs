@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] Transform player;
     [SerializeField] Vector3 cameraVelocity;
-    [SerializeField] float smoothTime = 1;
+    [SerializeField] float smoothTime = .3f;
     [SerializeField] bool lookAtPlayer;
 
     // Update is called once per frame
