@@ -809,6 +809,9 @@ MonoBehaviour:
   prefab:
   - {fileID: 6624940450041140602, guid: e491d890ad05898408eb1cd89d4e5535, type: 3}
   - {fileID: 6624940450041140602, guid: 2e5b49fda425fcc41b9fc6b98fc5bd45, type: 3}
+  - {fileID: 6624940450041140602, guid: 1b1724f18c34b6e40bdcbf10885487e5, type: 3}
+  - {fileID: 6624940450041140602, guid: d0576dc1d1e6a2341b819a37cf3d04a8, type: 3}
+  - {fileID: 553067147670857630, guid: 4ef2ae73a7a7e81488d829cc5e57c883, type: 3}
   referncepoint: {fileID: 1635445467}
   lastPlatformCreated: {fileID: 418500558}
   spaceBetweenPlatforms: 2
