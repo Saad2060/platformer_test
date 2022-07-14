@@ -22,29 +22,41 @@ public class Jump : MonoBehaviour
     private void Update()
     {
         CheckForInput();
-        if(transform.position.y < lastYPos)
-        {
-            anim.SetBool("Falling", true);
-        }
-        else
-        {
-            anim.SetBool("Falling", false); 
-        }
-        lastYPos = transform.position.y;
+        CheckIfPlayerISFalling();
+
     }
 
 
     void FixedUpdate()
     {
         CheckForGrounded();
-        if(jump == true)
+        CheckForJump();
+
+
+    }
+
+    void CheckForJump()
+    {
+        if (jump == true)
         {
             jump = false;
             rb.AddForce(new Vector2(0, thrust), ForceMode2D.Impulse);
         }
-
-
     }
+    
+    void CheckIfPlayerISFalling()
+    {
+        if (transform.position.y < lastYPos)
+        {
+            anim.SetBool("Falling", true);
+        }
+        else
+        {
+            anim.SetBool("Falling", false);
+        }
+        lastYPos = transform.position.y;
+    }
+
 
     void CheckForInput()
     {
@@ -69,15 +81,16 @@ public class Jump : MonoBehaviour
                 isGrounded = true;
                 anim.SetBool("IsGrounded", true);
             }
-            else
-            {
-                isGrounded = false;
-                anim.SetBool("IsGrounded", false);
-            }
+
 
 
             Debug.Log(hit.transform.name);
             Debug.DrawRay(raycastOrigin.position, Vector2.down, Color.blue);
+        }
+        else
+        {
+            isGrounded = false;
+            anim.SetBool("IsGrounded", false);
         }
     }
 }
