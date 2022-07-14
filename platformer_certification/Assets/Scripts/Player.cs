@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jump : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     [SerializeField] Rigidbody2D rb;
@@ -12,6 +12,14 @@ public class Jump : MonoBehaviour
     bool jump;
     [SerializeField] Animator anim;
     float lastYPos;
+    public float distanceTravelled;
+    [SerializeField] UIController uiController;
+    public int collectedCoins;
+    bool airJump;
+    bool shieldIsActive;
+    [SerializeField] GameObject shield;
+
+
 
     private void Start()
     {
@@ -21,6 +29,7 @@ public class Jump : MonoBehaviour
 
     private void Update()
     {
+        distanceTravelled = distanceTravelled + Time.deltaTime;
         CheckForInput();
         CheckIfPlayerISFalling();
 
@@ -60,10 +69,14 @@ public class Jump : MonoBehaviour
 
     void CheckForInput()
     {
-        if (isGrounded == true)
+        if (isGrounded == true || airJump == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                if(airJump == true && isGrounded == false)
+                {
+                    airJump = false;
+                }
                 jump = true;
                 anim.SetTrigger(("Jump"));
             }
@@ -81,6 +94,10 @@ public class Jump : MonoBehaviour
                 isGrounded = true;
                 anim.SetBool("IsGrounded", true);
             }
+            else
+            {
+                isGrounded = false;
+            }
 
 
 
@@ -91,6 +108,48 @@ public class Jump : MonoBehaviour
         {
             isGrounded = false;
             anim.SetBool("IsGrounded", false);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Obstacle"))
+        {
+            if(shieldIsActive == true)
+            {
+                shield.SetActive(false);
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                uiController.ShowGameOverScreen();
+            }
+
+
+        }
+        if (collision.transform.CompareTag("DeathBox"))
+        {
+            uiController.ShowGameOverScreen();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Collectable"))
+        {
+            collectedCoins++;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("AirJump"))
+        {
+            airJump = true;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("Shield"))
+        {
+            shieldIsActive = true;
+            shield.SetActive(true);
+            Destroy(collision.gameObject);
         }
     }
 }
