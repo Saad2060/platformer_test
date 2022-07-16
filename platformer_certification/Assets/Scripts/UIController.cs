@@ -10,22 +10,14 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] Player player;
     [SerializeField] Text coinsCollected;
+    [SerializeField] GameObject gameMusic;
     
-
-    //This is to test showing up the game over screen wheh we hit the t key
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ShowGameOverScreen();
-        }
-    }
-
 
 
     public void ShowGameOverScreen()
     {
         gameOverScreen.SetActive(true);
+        gameMusic.SetActive(false);
 
         float roundedDistance = Mathf.Ceil(player.distanceTravelled);
         distanceTravelled.text = roundedDistance.ToString();

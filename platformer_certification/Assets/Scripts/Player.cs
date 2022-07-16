@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     bool airJump;
     bool shieldIsActive;
     [SerializeField] GameObject shield;
+    [SerializeField] SFXManager sfxManager;
 
 
 
@@ -136,6 +137,7 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Collectable"))
         {
             collectedCoins++;
+            sfxManager.PlaySFX("Coin");
             Destroy(collision.gameObject);
         }
 

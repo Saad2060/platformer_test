@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Vector3 cameraVelocity;
     [SerializeField] float smoothTime = .3f;
     [SerializeField] bool lookAtPlayer;
+    [SerializeField] float offset = 2;
 
     // Update is called once per frame
     void Update()
@@ -20,7 +21,7 @@ public class CameraController : MonoBehaviour
 
         if (player.position.y > 1)
         {
-            Vector3 targetPosition = new Vector3(player.position.x, player.position.y, transform.position.z);
+            Vector3 targetPosition = new Vector3(player.position.x, player.position.y + offset, transform.position.z);
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref cameraVelocity, smoothTime);
 
             if (lookAtPlayer == true)
