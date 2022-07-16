@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     bool shieldIsActive;
     [SerializeField] GameObject shield;
     [SerializeField] SFXManager sfxManager;
+    bool playerIsFalling;
 
 
 
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
         if (jump == true)
         {
             jump = false;
+            
             rb.AddForce(new Vector2(0, thrust), ForceMode2D.Impulse);
         }
     }
@@ -59,10 +61,13 @@ public class Player : MonoBehaviour
         if (transform.position.y < lastYPos)
         {
             anim.SetBool("Falling", true);
+            playerIsFalling = true;
+            
         }
         else
         {
             anim.SetBool("Falling", false);
+            playerIsFalling = false;
         }
         lastYPos = transform.position.y;
     }
@@ -77,9 +82,15 @@ public class Player : MonoBehaviour
                 if(airJump == true && isGrounded == false)
                 {
                     airJump = false;
+                    sfxManager.PlaySFX("DoubleJump");
+                }
+                else
+                {
+                    sfxManager.PlaySFX("Jump");
                 }
                 jump = true;
                 anim.SetTrigger(("Jump"));
+                
             }
         }
     }
@@ -90,10 +101,14 @@ public class Player : MonoBehaviour
 
         if (hit.collider != null)
         {
-            if (hit.distance < .01f)
+            if (hit.distance < .1f)
             {
                 isGrounded = true;
                 anim.SetBool("IsGrounded", true);
+                if (playerIsFalling == true)
+                {
+                    sfxManager.PlaySFX("Land");
+                }
             }
             else
             {
@@ -118,10 +133,13 @@ public class Player : MonoBehaviour
             if(shieldIsActive == true)
             {
                 shield.SetActive(false);
+                shieldIsActive = false;
+                sfxManager.PlaySFX("ShieldBreak");
                 Destroy(collision.gameObject);
             }
             else
             {
+                sfxManager.PlaySFX("GameOverHit");
                 uiController.ShowGameOverScreen();
             }
 
@@ -144,6 +162,7 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("AirJump"))
         {
             airJump = true;
+            sfxManager.PlaySFX("PowerupDoubleJump");
             Destroy(collision.gameObject);
         }
 
@@ -151,6 +170,7 @@ public class Player : MonoBehaviour
         {
             shieldIsActive = true;
             shield.SetActive(true);
+            sfxManager.PlaySFX("PowerupShield");
             Destroy(collision.gameObject);
         }
     }

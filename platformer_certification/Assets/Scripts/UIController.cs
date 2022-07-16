@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Text coinsCollected;
     [SerializeField] GameObject gameMusic;
+    [SerializeField] GameObject sky;
     
 
 
@@ -18,7 +19,7 @@ public class UIController : MonoBehaviour
     {
         gameOverScreen.SetActive(true);
         gameMusic.SetActive(false);
-
+        sky.SetActive(false);
         float roundedDistance = Mathf.Ceil(player.distanceTravelled);
         distanceTravelled.text = roundedDistance.ToString();
         
